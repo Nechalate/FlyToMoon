@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
         Thrust();
         Rotation();
     }
-
+    // при нажатии клавиши W выполняется тяга "ракета начинает лететь".
     void Thrust() {
         if (Input.GetKey(KeyCode.W)) {
             StartMainThrust();
@@ -36,18 +36,18 @@ public class Movement : MonoBehaviour
             StopMainThrust();
         } 
     }
-
+    // выполняется тяга. при тяге проигрывается звук. 
     void StartMainThrust() {
         if (!mainThrust.isPlaying) mainThrust.Play();
         rocket.AddRelativeForce(Vector3.up * thrustSpeed * Time.deltaTime);
         if (audioSource.isPlaying != true) audioSource.PlayOneShot(engineSound);
     }
-
+    // отключение эффекта огня при тяге. отключение звукаю
     void StopMainThrust() {
         mainThrust.Stop();
         audioSource.Stop();
     }
-
+    // разворот ракеты при нажатиях клавиш A и D.
     void Rotation() {
         if (Input.GetKey(KeyCode.A)) {
             RotateLeft();
@@ -69,12 +69,12 @@ public class Movement : MonoBehaviour
         if (!leftThrust.isPlaying) leftThrust.Play();
             ApplyRotate(-rotateSpeed);
     }
-
+    // остановка разворотов ракеты при бездействии.
     void StopRotate() {
         rightThrust.Stop();
         leftThrust.Stop();
     }
-
+    // метод отвечает за исправление бага с физикой.
     void ApplyRotate(float rotateSpeed) {
         rocket.freezeRotation = true;
         transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);

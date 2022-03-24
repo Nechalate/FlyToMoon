@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Oscillator : MonoBehaviour
 {
@@ -8,18 +6,16 @@ public class Oscillator : MonoBehaviour
     [SerializeField] Vector3 endPosition;
     [SerializeField] [Range(0,1)] float rangeDiapozone;
     [SerializeField] float period = 2f;
-    // Start is called before the first frame update
     void Start()
     {
         startingPosition = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Wave();
     }
-
+    // плавное волнообразое передвежение объекта из точка A в точку Б.
     void Wave() {
         if (period == 0) return;
         float cycles = Time.time / period;

@@ -22,11 +22,11 @@ public class CollisionHandler : MonoBehaviour
         control = GetComponent<Movement>();
         audioSource = GetComponent<AudioSource>();
     }
-
+    // постоянный вызов метода "CheatConsole".
     void Update() {
         CheatConsole();
     }
-    // Проверка коллизии игрока.
+    // проверка коллизии игрока.
     private void OnCollisionEnter(Collision other) {
         if (isTransitioning || collisionCheat) return;
 
@@ -44,7 +44,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
         }
     }
-    // Последовательность при успешном прохождении уровня.
+    // последовательность при успешном прохождении уровня.
     void NextLevelSequence() {
         TransitioningControl();
         audioSource.Stop();
@@ -52,7 +52,7 @@ public class CollisionHandler : MonoBehaviour
         audioSource.PlayOneShot(winSound);
         Invoke("NextLevel", reloadAction);
     }
-    // Последовательность при неудачном завершении уровня.
+    // последовательность при неудачном завершении уровня.
     void CrashSequence() {
         TransitioningControl();
         audioSource.Stop();
@@ -64,12 +64,12 @@ public class CollisionHandler : MonoBehaviour
         isTransitioning = true;
         control.enabled = false;
     }
-    // Загрузка текущей сцены
+    // загрузка текущей сцены
     void ReloadLevel() {
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentLevelIndex);
     }
-    // Загрузка следующего уровня, при прохождении всех уровней обнуляет счетчик и возвращает на самый первый уровень.
+    // загрузка следующего уровня, при прохождении всех уровней обнуляет счетчик и возвращает на самый первый уровень.
     void NextLevel() {
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         int nextLevelIndex = currentLevelIndex + 1;
@@ -78,7 +78,7 @@ public class CollisionHandler : MonoBehaviour
         }
         SceneManager.LoadScene(nextLevelIndex);
     }
-
+    // метод позволяет включить читы. при нажатии кнопки L - "Level" будет переход на следующий уровень. при нажатии кнопки C = "Collision" выключается столкновение с коллизией.
     void CheatConsole() {
         if (Input.GetKeyDown(KeyCode.L)) NextLevel();
         if (Input.GetKeyDown(KeyCode.C)) collisionCheat = !collisionCheat;
